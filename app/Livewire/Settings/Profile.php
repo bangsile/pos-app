@@ -40,7 +40,7 @@ class Profile extends Component
                     'lowercase',
                     'email',
                     'max:255',
-                    Rule::unique(User::class)->ignore($user->id),
+                    Rule::unique(User::class)->whereNull('deleted_at')->ignore($user->id),
                 ],
             ],
             [

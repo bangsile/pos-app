@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\Company;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +15,12 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::redirect('pengaturan', 'pengaturan/profil');
 
-    Route::get('settings/profile', Profile::class)->name('settings.profile');
-    Route::get('settings/password', Password::class)->name('settings.password');
-    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    Route::get('pengaturan/profil', Profile::class)->name('settings.profile');
+    Route::get('pengaturan/password', Password::class)->name('settings.password');
+    Route::get('pengaturan/tampilan', Appearance::class)->name('settings.appearance');
+    Route::get('pengaturan/bisnis', Company::class )->middleware('role:admin')->name('settings.company');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

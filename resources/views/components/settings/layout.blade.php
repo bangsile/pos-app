@@ -4,6 +4,9 @@
             <flux:navlist.item :href="route('settings.profile')" wire:navigate>Profil</flux:navlist.item>
             <flux:navlist.item :href="route('settings.password')" wire:navigate>Password</flux:navlist.item>
             <flux:navlist.item :href="route('settings.appearance')" wire:navigate>Tampilan</flux:navlist.item>
+            @hasrole('admin')
+                <flux:navlist.item :href="route('settings.company')" wire:navigate>Bisnis/Usaha</flux:navlist.item>
+            @endhasrole
         </flux:navlist>
     </div>
 

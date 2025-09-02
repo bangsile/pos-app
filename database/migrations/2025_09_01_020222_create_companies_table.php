@@ -20,10 +20,11 @@ return new class extends Migration {
             $table->dateTime('subscription_expired_at')->nullable();
             $table->enum('status', ['active', 'suspended', 'trial'])->default('trial');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignUuid('company_id')->nullable()->after('email')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('company_id')->nullable()->after('email')->constrained()->nullOnDelete();
         });
     }
 

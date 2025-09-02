@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasUuids,HasRoles, HasFactory, Notifiable;
+    use HasUuids,HasRoles, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +36,21 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected static function booted()
+{
+    static::deleting(function ($user) {
+        if ($user->company) {
+            $user->company->delete(); // soft delete company
+        }
+    });
+
+    static::restoring(function ($user) {
+        if ($user->company()->withTrashed()->first()) {
+            $user->company()->withTrashed()->first()->restore(); // restore company saat user di-restore
+        }
+    });
+}
 
     /**
      * Get the attributes that should be cast.
@@ -59,5 +75,11 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    // Relations
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }
