@@ -15,4 +15,21 @@ class Outlet extends Model
         'address',
         'phone'
     ];
+
+    // Scope
+    public function scopeSearch($query, $term)
+    {
+        if (empty($term))
+            return $query; // tidak filter apapun
+
+        return $query->where(function ($q) use ($term) {
+            $q->where('name', 'like', '%' . $term . '%');
+        });
+    }
+
+    // Relaitons
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

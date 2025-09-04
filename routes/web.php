@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\OutletIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Company;
 use App\Livewire\Settings\Password;
@@ -21,6 +22,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pengaturan/password', Password::class)->name('settings.password');
     Route::get('pengaturan/tampilan', Appearance::class)->name('settings.appearance');
     Route::get('pengaturan/bisnis', Company::class )->middleware('role:admin')->name('settings.company');
+});
+
+Route::middleware(['auth','role:admin'])->group(function(){
+    Route::get('outlet', OutletIndex::class)->name('outlet.index');
 });
 
 require __DIR__ . '/auth.php';

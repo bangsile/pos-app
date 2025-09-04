@@ -35,4 +35,9 @@ class Company extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function outlets()
+    {
+        return $this->hasMany(Outlet::class);
+    }
 }
