@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\OutletIndex;
+use App\Livewire\OutletList;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Company;
 use App\Livewire\Settings\Password;
@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth','role:admin'])->group(function(){
-    Route::get('outlet', OutletIndex::class)->name('outlet.index');
+    Route::get('outlet', OutletList::class)->name('outlet.index');
 });
 
 require __DIR__ . '/auth.php';

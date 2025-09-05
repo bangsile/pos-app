@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class OutletIndex extends Component
+class OutletList extends Component
 {
     use WithPagination;
 
