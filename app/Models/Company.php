@@ -40,4 +40,9 @@ class Company extends Model
     {
         return $this->hasMany(Outlet::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

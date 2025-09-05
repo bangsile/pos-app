@@ -14,8 +14,8 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group heading="" class="grid">
                     <flux:navlist.item icon="chart-pie" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
-
                     <flux:navlist.item icon="home" :href="route('outlet.index')" :current="request()->routeIs('outlet.*')" wire:navigate>Outlet</flux:navlist.item>
+                    <flux:navlist.item icon="squares-2x2" :href="route('category.index')" :current="request()->routeIs('category.*')" wire:navigate>Kategori</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

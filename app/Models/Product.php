@@ -16,4 +16,10 @@ class Product extends Model
         'code',
         'barcode',
     ];
+
+    // Relasi
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
