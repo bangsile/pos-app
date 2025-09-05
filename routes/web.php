@@ -2,6 +2,7 @@
 
 use App\Livewire\CategoryList;
 use App\Livewire\OutletList;
+use App\Livewire\ProductList;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Company;
 use App\Livewire\Settings\Password;
@@ -28,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('outlet', OutletList::class)->name('outlet.index');
     Route::get('kategori', CategoryList::class)->name('category.index');
+    Route::get('produk', ProductList::class)->name('product.index');
 });
 
 require __DIR__ . '/auth.php';

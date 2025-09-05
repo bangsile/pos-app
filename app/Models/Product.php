@@ -17,7 +17,25 @@ class Product extends Model
         'barcode',
     ];
 
+    // Scope
+    public function scopeSearch($query, $term)
+    {
+        if (empty($term))
+            return $query; // tidak filter apapun
+
+        return $query->where(function ($q) use ($term) {
+            $q->where('name', 'like', '%' . $term . '%')
+                ->orWhere('code', 'like', '%' . $term . '%')
+                ->orWhere('barcode', 'like', '%' . $term . '%');
+        });
+    }
+
     // Relasi
+    public function companies()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
