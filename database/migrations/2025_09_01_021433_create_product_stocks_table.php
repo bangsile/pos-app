@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_stocks', function (Blueprint $table) {
+        Schema::create('product_stock_prices', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('product_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('outlet_id')->constrained()->cascadeOnDelete();
             $table->integer('stock')->default(0);
+            $table->integer('price')->default(0);
             $table->timestamps();
 
             $table->unique(['product_id', 'outlet_id']);    

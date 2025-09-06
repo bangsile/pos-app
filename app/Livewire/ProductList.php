@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductStockPrice;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -82,13 +83,21 @@ class ProductList extends Component
             'categoryId.required' => 'Kategori wajib dipilih.'
         ]);
         try {
-            Product::create([
+            $product = Product::create([
                 'name' => $this->name,
                 'code' => $this->code,
                 'barcode' => $this->barcode ?: $this->code,
                 'category_id' => $this->categoryId,
                 'company_id' => Auth::user()->company->id
             ]);
+            $outlets = Auth::user()->company->outlets;
+            foreach($outlets as $outlet)
+            {
+                ProductStockPrice::create([
+                    'outlet_id' => $outlet->id,
+                    'product_id' => $product->id
+                ]);
+            }
             $this->dispatch('show-notification', type: 'success', message: 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
             $this->dispatch('show-notification', type: 'danger', message: 'Gagal menambahkan produk');
