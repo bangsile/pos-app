@@ -59,15 +59,31 @@ class ProductList extends Component
 
     public function create()
     {
+        // $outletId = Auth::user()->company->outlets[0]->id;
+        // $outletIdd = Auth::user()->company->outlets[1]->id;
+        // $product = Product::first();
+        // $result = $product->details()->createMany([
+        //     ['outlet_id' => $outletId],
+        //     ['outlet_id' => $outletIdd],
+        // ]);
+        // dd($result);
+        // $outlets = Auth::user()->company->outlets;
+        // $data = [];
+        // foreach ($outlets as $outlet) {
+        //     $data[] = [
+        //         'outlet_id' => $outlet->id
+        //     ];
+        // }
+        // dd($data);
         $this->validate([
             'name' => 'required',
             'code' => [
-                'required',
-                'uppercase',
-                Rule::unique('products')
-                    // ->ignore($this->id)
-                    ->where(fn($query) => $query->where('company_id', auth()->user()->company_id))
-            ],
+                    'required',
+                    'uppercase',
+                    Rule::unique('products')
+                        // ->ignore($this->id)
+                        ->where(fn($query) => $query->where('company_id', auth()->user()->company_id))
+                ],
             'barcode' => [
                 Rule::unique('products')
                     ->ignore($this->id)
@@ -91,13 +107,13 @@ class ProductList extends Component
                 'company_id' => Auth::user()->company->id
             ]);
             $outlets = Auth::user()->company->outlets;
-            foreach($outlets as $outlet)
-            {
-                ProductStockPrice::create([
-                    'outlet_id' => $outlet->id,
-                    'product_id' => $product->id
-                ]);
+            $data = [];
+            foreach ($outlets as $outlet) {
+                $data[] = [
+                    'outlet_id' => $outlet->id
+                ];
             }
+            $product->details()->createMany($data);
             $this->dispatch('show-notification', type: 'success', message: 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
             $this->dispatch('show-notification', type: 'danger', message: 'Gagal menambahkan produk');
