@@ -61,6 +61,9 @@
                             <flux:button icon="trash" size="xs" variant="danger"
                                 wire:click="onDelete('{{ $product->id }}','{{ $product->name }}')"
                                 :loading="false" />
+                            <flux:button size="xs" variant="primary" href="{{ route('product.detail',$product->code) }}" wire:navigate>
+                                Detail
+                            </flux:button>
                         </div>
                     </x-table.data>
                 </x-table.row>
