@@ -59,22 +59,6 @@ class ProductList extends Component
 
     public function create()
     {
-        // $outletId = Auth::user()->company->outlets[0]->id;
-        // $outletIdd = Auth::user()->company->outlets[1]->id;
-        // $product = Product::first();
-        // $result = $product->details()->createMany([
-        //     ['outlet_id' => $outletId],
-        //     ['outlet_id' => $outletIdd],
-        // ]);
-        // dd($result);
-        // $outlets = Auth::user()->company->outlets;
-        // $data = [];
-        // foreach ($outlets as $outlet) {
-        //     $data[] = [
-        //         'outlet_id' => $outlet->id
-        //     ];
-        // }
-        // dd($data);
         $this->validate([
             'name' => 'required',
             'code' => [
